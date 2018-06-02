@@ -36,7 +36,7 @@ public class CardValidator {
 					stream.write(bytes);
 					stream.close();
 				}catch(Exception e) {
-					System.out.println("Sorry something went worng");
+					System.out.println("Sorry something went wrong");
 				}
 			}
 			msg.put("card", newCard);

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+// import backp from "../../src/main/webapp/images/backp.jpeg";
 import './App.css';
 import axios from 'axios';
 
@@ -46,6 +47,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+          <img src="" alt=""/>
           <input type="file" style={{ display: "none" }} onChange={this.fileSelectedHandler} ref={fileInput => (this.fileInput = fileInput)}  />
           <button onClick={() => this.fileInput.click()}>Pick File</button>
           <button onClick={this.fileUploadHandler}>upload</button>
