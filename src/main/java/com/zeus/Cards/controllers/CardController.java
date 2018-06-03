@@ -1,6 +1,5 @@
 package com.zeus.Cards.controllers;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -11,10 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.Cards.models.Card;
 import com.zeus.Cards.services.CardService;
@@ -39,9 +35,8 @@ public class CardController {
 	}
 	
 	@PostMapping(value = "/new")
-	public Map<String, Object> create(@RequestParam("file") MultipartFile file,@RequestParam("card") String card) throws JsonParseException, JsonMappingException, IOException{
-		Card newCard = mapper.readValue(card, Card.class);
-		return _cS.create(newCard, file);
+	public Map<String, Object> create(@RequestParam("card") Card card){
+		return _cS.create(card);
 	}
 	
 //	@PutMapping("/update")

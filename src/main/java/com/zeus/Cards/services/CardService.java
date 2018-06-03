@@ -24,8 +24,8 @@ public class CardService {
 	
     ObjectMapper oMapper = new ObjectMapper();
 	
-	public Map<String, Object> create(Card newCard, MultipartFile image) {
-		Map<String, Object> res = Cvalidator.validate(newCard,image);
+	public Map<String, Object> create(Card newCard) {
+		Map<String, Object> res = Cvalidator.validate(newCard);
 		if(res.containsKey("success")) {
 			_cR.save((Card)res.get("card"));
 		}
@@ -40,7 +40,7 @@ public class CardService {
 		return _cR.findAll();
 	}
 //	public Map<String, Object> update(Card card, ) {
-//		Map<String, Object> res = Cvalidator.validate(card, MultipartFile image);
+//		Map<String, Object> res = Cvalidator.validate(Card card);
 //		if(res.containsKey("success")) {
 //			_cR.save((Card)res.get("card"));
 //		}

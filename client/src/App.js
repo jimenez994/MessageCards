@@ -1,57 +1,33 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-// import backp from "../../src/main/webapp/images/backp.jpeg";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import './App.css';
-import axios from 'axios';
+import { Provider } from 'react-redux';
+import store from './store';
+import Cards from './componets/cards/Cards';
+
+// Componets
+import Navbar from "./componets/layout/navbar";
+import Landing from "./componets/layout/landing";
+import Footer from "./componets/layout/footer";
 
 class App extends Component {
-    state = {
-      selectedFile: null,
-      img: "",
-      title: "",
-      description: ""
-    }
-
-    fileSelectedHandler = event => {
-      this.setState({
-        selectedFile: event.target.files[0]
-      })
-    }
-    fileUploadHandler = () => {
-      const fd = new FormData();
-      
-      const data ={
-        img: "this.state.selectedFile.name",
-        title: "testing",
-        description: "some code"
-      }
-      fd.append("file", this.state.selectedFile);
-      fd.append("card", JSON.stringify(data));
-      const config = { headers: { "Content-Type": "application/json" } };
-      axios.post("http://localhost:8080/api/card/new",  fd,config,{ 
-        onUploadProgress: progressEvent => {
-          console.log('Upload Progress:'+ Math.round(progressEvent.loaded / progressEvent.total * 100)+ '%')
-        }
-      })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    }
+  
   render() {
   
-    return <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-          <img src="" alt=""/>
-          <input type="file" style={{ display: "none" }} onChange={this.fileSelectedHandler} ref={fileInput => (this.fileInput = fileInput)}  />
-          <button onClick={() => this.fileInput.click()}>Pick File</button>
-          <button onClick={this.fileUploadHandler}>upload</button>
-      </div>;
+    return (
+      <Provider store={store}>
+        <Router>
+          <div className="App">
+            <Navbar/>
+            <Route exact path="/" component={Landing}/>
+            <div className="container">
+              <Route exact path="/cards" component={Cards}/>
+            </div>
+            <Footer/>
+          </div>
+        </Router>
+      </Provider>
+    )
   }
 }
 

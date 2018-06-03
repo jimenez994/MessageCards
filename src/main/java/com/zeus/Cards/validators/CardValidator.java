@@ -14,7 +14,7 @@ import com.zeus.Cards.models.Card;
 @Component
 public class CardValidator {
 	
-	public Map<String,Object> validate(Card newCard, MultipartFile file){
+	public Map<String,Object> validate(Card newCard){
 		Map<String, Object> msg = new HashMap<String, Object>();
 		if(newCard.getTitle().isEmpty()) {
 			msg.put("title", "Title is required");
@@ -23,22 +23,6 @@ public class CardValidator {
 			msg.put("description", "Description is required");
 		}
 		if(msg.isEmpty()) {
-			if(!file.isEmpty()) {
-				try {
-					byte[] bytes = file.getBytes();
-					File dir = new File("src/main/webapp/images/");
-					if(!dir.exists())
-						dir.mkdir();
-					File serverFile = new File(dir.getAbsolutePath()
-							+ File.separator + file.getOriginalFilename());
-					BufferedOutputStream stream = new BufferedOutputStream(
-							new FileOutputStream(serverFile));
-					stream.write(bytes);
-					stream.close();
-				}catch(Exception e) {
-					System.out.println("Sorry something went wrong");
-				}
-			}
 			msg.put("card", newCard);
 			msg.put("success", "Success!");
 		}
