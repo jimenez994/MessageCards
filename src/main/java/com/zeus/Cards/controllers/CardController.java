@@ -34,7 +34,7 @@ public class CardController {
 		return _cS.getOne(id);
 	}
 	
-	@PostMapping(value = "/new")
+	@PostMapping("/new")
 	public Map<String, Object> create(@RequestParam("card") Card card){
 		return _cS.create(card);
 	}
