@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeus.Cards.models.Card;
@@ -24,8 +23,8 @@ public class CardService {
 	
     ObjectMapper oMapper = new ObjectMapper();
 	
-	public Map<String, Object> create(Card newCard, MultipartFile image) {
-		Map<String, Object> res = Cvalidator.validate(newCard, image);
+	public Map<String, Object> create(Card newCard) {
+		Map<String, Object> res = Cvalidator.validate(newCard);
 		if(res.containsKey("success")) {
 			_cR.save((Card)res.get("card"));
 		}

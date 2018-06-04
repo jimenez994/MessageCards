@@ -13,6 +13,7 @@ export const addCard = cardData => dispatch => {
           payload: res.data
         })
       }else{
+        console.log(res.data)
         dispatch({
           type: GET_ERRORS,
           payload: res.data

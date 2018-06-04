@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { addCard, addCardWithImg } from '../../actions/cardActions';
 import isEmpty from "../../validation/is-empty";
+import fileConvertor from "../../validation/fileConvertor";
 // Input form
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
@@ -22,30 +23,25 @@ class CardForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   fileSelectedHandler = event => {
+    const img = fileConvertor(event.target.files[0]) + ""
     this.setState({
-      selectedFile: event.target.files[0]
+      selectedFile: img
+
     })
+    console.log(img)
   }
   onChange(e) {
     this.setState({[e.target.name]: e.target.value});
   }
   onSubmit(e){
     e.preventDefault();
-    const cardData = new FormData();
-
     const Data = {
-      img: "image",
+      img: this.state.selectedFile,
       title: this.state.title,
       description: this.state.description
     }
-    if(this.state.selectedFile == null){
       this.props.addCard(Data)
-    }else{
-      console.log(this.state.selectedFile)
-      cardData.append("file", this.state.selectedFile)
-      cardData.append("card", JSON.stringify(Data))
-      this.props.addCardWithImg(cardData);
-    }
+
     this.setState({title: "", description: "", selectedFile: ""})
   }
   render() {
