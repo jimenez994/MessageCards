@@ -1,16 +1,37 @@
 import React, { Component } from 'react';
 import Spinner from "../common/Spinner";
-import PostForm from "./CardForm";
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { getCards } from '../../actions/cardActions';
+import CardFeed from './CardFeed';
 
 class Cards extends Component {
+  componentDidMount(){
+    this.props.getCards();
+  }
   render() {
+    const { cards, loading } = this.props.card;
+    console.log(this.props.card)
+    let CardsContent;
+    if (cards === null || loading) {
+      CardsContent = <Spinner />
+    } else {
+      CardsContent = <CardFeed cards={cards} />
+    }
     return (
-      <div>
-        <PostForm/>
-        cards....
+      <div className="feed">
+        <div className="container">
+          { CardsContent }
+        </div>
       </div>
     )
   }
 }
-
-export default Cards;
+Cards.propTypes ={
+  getCards: PropTypes.func.isRequired,
+  card: PropTypes.object.isRequired
+}
+const mapStateToProps = state => ({
+  card: state.card
+})
+export default connect(mapStateToProps, { getCards })(Cards);

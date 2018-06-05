@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ERRORS, ADD_CARD, CARD_LOADING,CLEAR_ERRORS } from "./types";
+import { GET_ERRORS, ADD_CARD, CARD_LOADING,CLEAR_ERRORS, GET_CARDS } from "./types";
 
 export const addCard = cardData => dispatch => {
   console.log(cardData)
@@ -22,15 +22,15 @@ export const addCard = cardData => dispatch => {
     })
     .catch(err => console.log(err));
 }
-export const addCardWithImg = cardData => dispatch => {
-  console.log(cardData)
-  dispatch(clearErrors());
+export const getCards = () => dispatch => {
+  dispatch(setCardLoading);
   axios
-    .post("http://localhost:8080/api/card/newCardImg", cardData)
+    .post("http://localhost:8080/api/card/all")
     .then(res => {
-      if (res.data.success) {
-        dispatch({
-          type: ADD_CARD,
+      if (res.data != null) {
+        // console.log(res.data)
+        dispatch( {
+          type: GET_CARDS,
           payload: res.data
         })
       } else {
@@ -45,6 +45,7 @@ export const addCardWithImg = cardData => dispatch => {
 
 
 export const setCardLoading = () => {
+  console.log("loading...")
   return {
     type: CARD_LOADING
   }

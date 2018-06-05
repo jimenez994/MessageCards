@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { addCard, addCardWithImg } from '../../actions/cardActions';
-import isEmpty from "../../validation/is-empty";
+// import { withRouter } from 'react-router-dom';
+import { addCard } from '../../actions/cardActions';
+// import isEmpty from "../../validation/is-empty";
 // Input form
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
+import './cardStyle.css'
 
 class CardForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedFile: null,
-      img: "",
+      img: null,
       title: "",
       description: "",
       errors: {}
@@ -22,14 +22,11 @@ class CardForm extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   fileSelectedHandler = event => {
-    // const img = fileConvertor(event.target.files[0]) + ""
     var reader = new FileReader();
     reader.readAsDataURL(event.target.files[0]);
-    let img = ""
     reader.onload = () => {
-      img = reader.result
       this.setState({
-        selectedFile: img
+        img: reader.result
       })
     };
     
@@ -40,36 +37,44 @@ class CardForm extends Component {
   onSubmit(e){
     e.preventDefault();
     const Data = {
-      img: this.state.selectedFile,
+      img: this.state.img,
       title: this.state.title,
       description: this.state.description
     }
       this.props.addCard(Data)
 
-    this.setState({title: "", description: "", selectedFile: ""})
+    this.setState({title: "", description: "", img: null})
   }
   render() {
     const { errors } = this.state;
     return (
       <div className="cardForm">
         <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
+          <div className="col-md-8 m-auto">
+            <div>
               <h1 className="display-4 text-center">Create</h1>
               <p className="lead text-center">
                 Share 
               </p>
-              <img src="data:image/png;base64, " alt="Red dot" />
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup placeholder="Title" name="title" type="text" value={this.state.title} onChange={this.onChange} error={errors.title} />
-                <TextAreaFieldGroup placeholder="Description" name="description" value={this.state.description} onChange={this.onChange} error={errors.description} />
+                <TextAreaFieldGroup placeholder="Message" name="description" value={this.state.description} onChange={this.onChange} error={errors.description} />
                 <input type="file" onChange={this.fileSelectedHandler} name="file" />
                 <button type="submit" className="btn btn-dark" >
                   Submit
                 </button>
               </form>
-
             </div>
+          </div> 
+        </div>
+        <br/>
+        <div className="flip flip-vertical text-center">
+          <div className="front" style={ { backgroundImage: `url(${this.state.img})` } } >
+            <h1 className="text-shadow">{this.state.title}</h1>
+          </div>
+          <div className="back">
+            <h2>Message</h2>
+            <p className="text-shadow">{this.state.description}</p>
           </div>
         </div>
       </div> 
@@ -78,11 +83,10 @@ class CardForm extends Component {
 }
 CardForm.propTypes = {
   addCard: PropTypes.func.isRequired,
-  addCardWithImg: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired
 }
 const mapStateToProps = state => ({
   errors: state.errors
 })
 
-export default connect(mapStateToProps, {addCard, addCardWithImg})(CardForm);
+export default connect(mapStateToProps, {addCard})(CardForm);

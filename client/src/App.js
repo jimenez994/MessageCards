@@ -4,6 +4,7 @@ import './App.css';
 import { Provider } from 'react-redux';
 import store from './store';
 import Cards from './componets/cards/Cards';
+import CardForm from './componets/cards/CardForm';
 
 // Componets
 import Navbar from "./componets/layout/navbar";
@@ -22,6 +23,7 @@ class App extends Component {
             <Route exact path="/" component={Landing}/>
             <div className="container">
               <Route exact path="/cards" component={Cards}/>
+              <Route exact path="/create" component={CardForm} />
             </div>
             <Footer/>
           </div>
