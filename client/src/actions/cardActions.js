@@ -2,7 +2,6 @@ import axios from 'axios';
 import { GET_ERRORS, ADD_CARD, CARD_LOADING,CLEAR_ERRORS, GET_CARDS } from "./types";
 
 export const addCard = cardData => dispatch => {
-  console.log(cardData)
   dispatch(clearErrors());
   axios
     .post("http://localhost:8080/api/card/newCard", cardData)
@@ -10,10 +9,9 @@ export const addCard = cardData => dispatch => {
       if(res.data.success){
         dispatch({
           type: ADD_CARD,
-          payload: res.data
+          payload: res.data.card
         })
       }else{
-        console.log(res.data)
         dispatch({
           type: GET_ERRORS,
           payload: res.data
@@ -28,7 +26,6 @@ export const getCards = () => dispatch => {
     .post("http://localhost:8080/api/card/all")
     .then(res => {
       if (res.data != null) {
-        // console.log(res.data)
         dispatch( {
           type: GET_CARDS,
           payload: res.data
@@ -45,7 +42,6 @@ export const getCards = () => dispatch => {
 
 
 export const setCardLoading = () => {
-  console.log("loading...")
   return {
     type: CARD_LOADING
   }

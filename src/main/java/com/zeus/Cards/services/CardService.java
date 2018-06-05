@@ -26,7 +26,12 @@ public class CardService {
 	public Map<String, Object> create(Card newCard) {
 		Map<String, Object> res = Cvalidator.validate(newCard);
 		if(res.containsKey("success")) {
-			_cR.save((Card)res.get("card"));
+			Card card = _cR.save((Card)res.get("card"));
+			if(card.getImg() == null) {
+				card.setImg("https://picsum.photos/200/200?image="+card.getId());
+				_cR.save(card);
+				res.put("card", card);
+			}
 		}
 		return res;
 	}

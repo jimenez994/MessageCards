@@ -11,9 +11,8 @@ class Cards extends Component {
   }
   render() {
     const { cards, loading } = this.props.card;
-    console.log(this.props.card)
     let CardsContent;
-    if (cards === null || loading) {
+    if (cards === null || loading === false) {
       CardsContent = <Spinner />
     } else {
       CardsContent = <CardFeed cards={cards} />

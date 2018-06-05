@@ -6,14 +6,13 @@ const initialSate = {
 };
 
 export default function(state = initialSate, action) {
-  switch (action.key) {
+  switch (action.type) {
     case CARD_LOADING:
       return {
         ...state,
         loading: true
       }
     case GET_CARDS: 
-    console.log(action.payload)
       return {
         ...state,
         cards: action.payload,

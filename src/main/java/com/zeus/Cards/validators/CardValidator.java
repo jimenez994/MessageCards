@@ -18,9 +18,6 @@ public class CardValidator {
 		if(newCard.getDescription().isEmpty() || newCard.getDescription() == null) {
 			msg.put("description", "Description is required");
 		}
-		if(newCard.getImg() == null) {
-			newCard.setImg("https://picsum.photos/200/200?image="+newCard.getId());
-		}
 		if(msg.isEmpty()) {
 			msg.put("card", newCard);
 			msg.put("success", "Success!");

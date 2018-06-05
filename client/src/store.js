@@ -1,12 +1,17 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { createStore, applyMiddleware, compose } from "redux";
 import thunk from 'redux-thunk';
 
+// this is going to index reducer even tho is nit especified to there
 import rootReducer from './reducers';
 
+// prelodedSate
 const initialState = {}
 
-const middleware=[thunk];
+// to anhance the store with third-party capabilities as middleware
+const middleware = [thunk];
+// this is part of reddux
 
+// Store takes in a Reucer, prelodedSate, enhancer
 const store = createStore(
   rootReducer,
   initialState,
@@ -17,4 +22,3 @@ const store = createStore(
 );
 
 export default store;
-

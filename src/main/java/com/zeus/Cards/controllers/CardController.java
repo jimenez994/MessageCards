@@ -36,7 +36,6 @@ public class CardController {
 	
 	@PostMapping("/newCard")
 	public Map<String, Object> createCard(@RequestBody Card newCard) {
-		System.out.println(newCard.getImg());
 		return _cS.create(newCard);
 	}
 	

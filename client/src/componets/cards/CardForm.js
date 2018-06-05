@@ -42,8 +42,8 @@ class CardForm extends Component {
       description: this.state.description
     }
       this.props.addCard(Data)
-
     this.setState({title: "", description: "", img: null})
+    this.props.history.push('/cards')
   }
   render() {
     const { errors } = this.state;

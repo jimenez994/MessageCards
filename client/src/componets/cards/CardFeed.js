@@ -5,7 +5,7 @@ import CardItem from './CardItem';
 class CardFeed extends Component {
   render() {
     const { cards } = this.props;
-    return cards.map(card =>  <CardItem key={card.id} card={card}/>)
+    return cards.map(card =>   <CardItem key={card.id} card={card}/>)
   }
 }
 
